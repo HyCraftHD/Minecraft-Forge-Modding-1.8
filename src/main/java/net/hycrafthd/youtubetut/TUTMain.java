@@ -1,11 +1,13 @@
 package net.hycrafthd.youtubetut;
 
 import net.hycrafthd.youtubetut.block.TUTBlock;
+import net.hycrafthd.youtubetut.item.TUTFood;
 import net.hycrafthd.youtubetut.item.TUTItem;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -23,11 +25,13 @@ public class TUTMain
     public static final String MODID = "tutyoutube";
     public static final String VERSION = "1.0";
     
+    public static CreativeTabs tuttab;
+    
     public static Item tutitem;
     
     public static Block tutblock;
     
-    public static CreativeTabs tuttab;
+    public static Item tutfood;
     
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
@@ -43,6 +47,8 @@ public class TUTMain
     	tutitem = new TUTItem().setUnlocalizedName("tutitem").setCreativeTab(tuttab);
     	
     	tutblock = new TUTBlock().setUnlocalizedName("tutblock").setCreativeTab(tuttab);
+    	
+    	tutfood = new TUTFood().setUnlocalizedName("tutfood").setCreativeTab(tuttab);
     	
     }
     
@@ -64,7 +70,6 @@ public class TUTMain
     
     //Craftingrezepte
     private void crafting() {
-    	
     	GameRegistry.addRecipe(new ItemStack(Blocks.diamond_block, 64), new Object[]{
     		"ggg",
     		"gbg",
@@ -75,6 +80,14 @@ public class TUTMain
     	
     	GameRegistry.addShapelessRecipe(new ItemStack(Items.diamond, 2), new ItemStack(Blocks.dirt), new ItemStack(Items.compass));
     	
+    	ItemStack testitemstack = new ItemStack(Items.iron_sword, 1);
+    	
+    	testitemstack.addEnchantment(Enchantment.sharpness, 11);
+    	testitemstack.setItemDamage(241);
+    	testitemstack.setStackDisplayName("§6§lMASTER SWORD§r");
+    	
+    	GameRegistry.addShapelessRecipe(testitemstack, new ItemStack(Blocks.dirt));
+    	
     }
     
     //RegisterItem
@@ -82,6 +95,9 @@ public class TUTMain
     	
     	GameRegistry.registerItem(tutitem, "tutitem");
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutitem, 0, new ModelResourceLocation(MODID + ":tutitem", "inventory"));
+    	
+    	GameRegistry.registerItem(tutfood, "tutfood");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutfood, 0, new ModelResourceLocation(MODID + ":tutfood", "inventory"));
     	
     }
     
