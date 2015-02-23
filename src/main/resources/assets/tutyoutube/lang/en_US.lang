@@ -1,5 +1,3 @@
-item.tutitem.name=§3Tutorial Item§r
-tile.tutblock.name=§3Tutorial Block§r
-item.tutfood.name=§3Tutorial Food§r
-
-itemGroup.tuttab=§d§lTutorial Tab§r
+item.tutitem.name=Tutorial Item
+tile.tutblock.name=Tutorial Block
+itemGroup.tuttab=Tutorial Tab
