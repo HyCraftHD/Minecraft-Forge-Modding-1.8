@@ -1,5 +1,10 @@
 package net.hycrafthd.youtubetut;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.hycrafthd.youtubetut.block.TUTBlock;
 import net.hycrafthd.youtubetut.item.TUTFood;
 import net.hycrafthd.youtubetut.item.TUTItem;
@@ -12,6 +17,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -56,9 +64,11 @@ public class TUTMain
     public void init(FMLInitializationEvent event)
     {
     	
-    	crafting();
     	registerItems();
     	registerBlocks();
+    	removerecipes();
+    	crafting();
+    	furnancerecipes();
     	
     }
     
@@ -90,6 +100,11 @@ public class TUTMain
     	
     }
     
+    //Furnancerecipes
+    public void furnancerecipes() {
+    	GameRegistry.addSmelting(tutblock, new ItemStack(tutfood, 5), 1.0F);
+    }
+    
     //RegisterItem
     private void registerItems() {
     	
@@ -107,5 +122,31 @@ public class TUTMain
     	GameRegistry.registerBlock(tutblock, "tutblock");
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(tutblock), 0, new ModelResourceLocation(MODID + ":tutblock", "inventory"));
     	
+    }
+    
+    //Remove Vanilla Recipes
+    private void removerecipes() {
+    	
+    	List<IRecipe> craftingrecipse = CraftingManager.getInstance().getRecipeList();
+    	Iterator<IRecipe> craftingremover = craftingrecipse.iterator();
+    	while(craftingremover.hasNext()) {
+    		ItemStack craftingitemstack = craftingremover.next().getRecipeOutput();
+    		
+    		if(craftingitemstack != null && craftingitemstack.getItem() == Item.getItemFromBlock(Blocks.iron_block)) {
+    			craftingremover.remove();
+    		}
+
+    	}
+    	
+    	Map furnacerecipes = FurnaceRecipes.instance().getSmeltingList();
+    	Iterator furnanceremover = furnacerecipes.entrySet().iterator();
+    	while(furnanceremover.hasNext()) {
+    		Entry furnanceentry = (Entry) furnanceremover.next();
+    		ItemStack furnanceitemstack = (ItemStack) furnanceentry.getValue();
+    		
+    		if(furnanceitemstack != null && furnanceitemstack.getItem() == Items.iron_ingot) {
+    			furnanceremover.remove();
+    		}
+    	}
     }
 }
