@@ -1,3 +1,11 @@
-item.tutitem.name=Tutorial Item
-tile.tutblock.name=Tutorial Block
-itemGroup.tuttab=Tutorial Tab
+item.tutitem.name=§3Tutorial Item§r
+tile.tutblock.name=§3Tutorial Block§r
+item.tutfood.name=§3Tutorial Food§r
+
+item.tutaxe.name=§3Tutorial Axe§r
+item.tutpickaxe.name=§3Tutorial Pickaxe§r
+item.tutsword.name=§3Tutorial Sword§r
+item.tutspade.name=§3Tutorial Spade§r
+item.tuthoe.name=§3Tutorial Hoe§r
+
+itemGroup.tuttab=§d§lTutorial Tab§r
