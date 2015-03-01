@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.hycrafthd.youtubetut.block.TUTBlock;
+import net.hycrafthd.youtubetut.handler.TUTFuelHandler;
+import net.hycrafthd.youtubetut.item.TUTArmor;
 import net.hycrafthd.youtubetut.item.TUTAxe;
 import net.hycrafthd.youtubetut.item.TUTFood;
 import net.hycrafthd.youtubetut.item.TUTHoe;
@@ -22,6 +24,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -49,12 +52,18 @@ public class TUTMain
     public static Item tutfood;
     
     public static ToolMaterial tuttoolmaterial;
+    public static ArmorMaterial tutarmormaterial;
     
     public static Item tutaxe;
     public static Item tutpickaxe;
     public static Item tutsword;
     public static Item tutspade;
     public static Item tuthoe;
+    
+    public static Item tuthelmet;
+    public static Item tutchestplate;
+    public static Item tutleggings;
+    public static Item tutboots;
     
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
@@ -74,12 +83,18 @@ public class TUTMain
     	tutfood = new TUTFood().setUnlocalizedName("tutfood").setCreativeTab(tuttab);
 
     	tuttoolmaterial = EnumHelper.addToolMaterial("TUTTOOL", 3, 19, 64F, 10F, 64).setRepairItem(new ItemStack(tutitem, 1));
+    	tutarmormaterial = EnumHelper.addArmorMaterial("TUTARMOR", "", 11, new int[]{1, 10, 6, 3}, 60);
     	
     	tutaxe = new TUTAxe(tuttoolmaterial).setUnlocalizedName("tutaxe").setCreativeTab(tuttab);
     	tutpickaxe = new TUTPickaxe(tuttoolmaterial).setUnlocalizedName("tutpickaxe").setCreativeTab(tuttab);
     	tutsword = new TUTSword(tuttoolmaterial).setUnlocalizedName("tutsword").setCreativeTab(tuttab);
     	tutspade = new TUTSpade(tuttoolmaterial).setUnlocalizedName("tutspade").setCreativeTab(tuttab);
     	tuthoe = new TUTHoe(tuttoolmaterial).setUnlocalizedName("tuthoe").setCreativeTab(tuttab);
+    	
+    	tuthelmet = new TUTArmor(tutarmormaterial, 0).setUnlocalizedName("tuthelmet").setCreativeTab(tuttab);
+    	tutchestplate = new TUTArmor(tutarmormaterial, 1).setUnlocalizedName("tutchestplate").setCreativeTab(tuttab);
+    	tutleggings = new TUTArmor(tutarmormaterial, 2).setUnlocalizedName("tutleggings").setCreativeTab(tuttab);
+    	tutboots = new TUTArmor(tutarmormaterial, 3).setUnlocalizedName("tutboots").setCreativeTab(tuttab);
     	
     }
     
@@ -92,6 +107,7 @@ public class TUTMain
     	removerecipes();
     	crafting();
     	furnancerecipes();
+    	registerHandlers();
     	
     }
     
@@ -148,6 +164,15 @@ public class TUTMain
     	GameRegistry.registerItem(tuthoe, "tuthoe");
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuthoe, 0, new ModelResourceLocation(MODID + ":tuthoe", "inventory"));
     	
+    	GameRegistry.registerItem(tuthelmet, "tuthelmet");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuthelmet, 0, new ModelResourceLocation(MODID + ":tuthelmet", "inventory"));
+    	GameRegistry.registerItem(tutchestplate, "tutchestplate");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutchestplate, 0, new ModelResourceLocation(MODID + ":tutchestplate", "inventory"));
+    	GameRegistry.registerItem(tutleggings, "tutleggings");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutleggings, 0, new ModelResourceLocation(MODID + ":tutleggings", "inventory"));
+    	GameRegistry.registerItem(tutboots, "tutboots");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutboots, 0, new ModelResourceLocation(MODID + ":tutboots", "inventory"));
+    	
     	
     }
     
@@ -183,5 +208,12 @@ public class TUTMain
     			furnanceremover.remove();
     		}
     	}
+    }
+    
+    //RegisterHandlers
+    private void registerHandlers() {
+    	
+    	GameRegistry.registerFuelHandler(new TUTFuelHandler());
+    	
     }
 }

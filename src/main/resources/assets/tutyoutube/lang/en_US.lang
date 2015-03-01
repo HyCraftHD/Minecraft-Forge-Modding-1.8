@@ -8,4 +8,9 @@ item.tutsword.name=§3Tutorial Sword§r
 item.tutspade.name=§3Tutorial Spade§r
 item.tuthoe.name=§3Tutorial Hoe§r
 
+item.tuthelmet.name=§3Tutorial Helmet§r
+item.tutchestplate.name=§3Tutorial Chestplate§r
+item.tutleggings.name=§3Tutorial Leggings§r
+item.tutboots.name=§3Tutorial Boots§r
+
 itemGroup.tuttab=§d§lTutorial Tab§r
