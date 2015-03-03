@@ -1,5 +1,4 @@
 item.tutitem.name=§3Tutorial Item§r
-tile.tutblock.name=§3Tutorial Block§r
 item.tutfood.name=§3Tutorial Food§r
 
 item.tutaxe.name=§3Tutorial Axe§r
@@ -12,5 +11,8 @@ item.tuthelmet.name=§3Tutorial Helmet§r
 item.tutchestplate.name=§3Tutorial Chestplate§r
 item.tutleggings.name=§3Tutorial Leggings§r
 item.tutboots.name=§3Tutorial Boots§r
+
+tile.tutblock2.name=§3Tutorial Block 2§r
+tile.tutblock.name=§3Tutorial Block§r
 
 itemGroup.tuttab=§d§lTutorial Tab§r

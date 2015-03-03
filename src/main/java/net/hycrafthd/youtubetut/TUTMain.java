@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.hycrafthd.youtubetut.block.TUTBlock;
+import net.hycrafthd.youtubetut.block.TUTBlock2;
 import net.hycrafthd.youtubetut.handler.TUTFuelHandler;
 import net.hycrafthd.youtubetut.item.TUTArmor;
 import net.hycrafthd.youtubetut.item.TUTAxe;
@@ -48,6 +49,7 @@ public class TUTMain
     public static Item tutitem;
     
     public static Block tutblock;
+    public static Block tutblock2;
     
     public static Item tutfood;
     
@@ -79,6 +81,7 @@ public class TUTMain
     	tutitem = new TUTItem().setUnlocalizedName("tutitem").setCreativeTab(tuttab);
     	
     	tutblock = new TUTBlock().setUnlocalizedName("tutblock").setCreativeTab(tuttab);
+    	tutblock2 = new TUTBlock2().setUnlocalizedName("tutblock2").setCreativeTab(tuttab);
     	
     	tutfood = new TUTFood().setUnlocalizedName("tutfood").setCreativeTab(tuttab);
 
@@ -182,13 +185,16 @@ public class TUTMain
     	GameRegistry.registerBlock(tutblock, "tutblock");
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(tutblock), 0, new ModelResourceLocation(MODID + ":tutblock", "inventory"));
     	
+    	GameRegistry.registerBlock(tutblock2, "tutblock2");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(tutblock2), 0, new ModelResourceLocation(MODID + ":tutblock2", "inventory"));
+    	
     }
     
     //Remove Vanilla Recipes
     private void removerecipes() {
     	
-    	List<IRecipe> craftingrecipse = CraftingManager.getInstance().getRecipeList();
-    	Iterator<IRecipe> craftingremover = craftingrecipse.iterator();
+    	List<IRecipe> craftingrecipes = CraftingManager.getInstance().getRecipeList();
+    	Iterator<IRecipe> craftingremover = craftingrecipes.iterator();
     	while(craftingremover.hasNext()) {
     		ItemStack craftingitemstack = craftingremover.next().getRecipeOutput();
     		
