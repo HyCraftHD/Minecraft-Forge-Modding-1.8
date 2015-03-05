@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import net.hycrafthd.youtubetut.block.TUTBlock;
 import net.hycrafthd.youtubetut.block.TUTBlock2;
+import net.hycrafthd.youtubetut.handler.TUTEventHandler;
 import net.hycrafthd.youtubetut.handler.TUTFuelHandler;
 import net.hycrafthd.youtubetut.item.TUTArmor;
 import net.hycrafthd.youtubetut.item.TUTAxe;
@@ -30,7 +31,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -67,9 +70,18 @@ public class TUTMain
     public static Item tutleggings;
     public static Item tutboots;
     
+    public static String tutgreeting;
+    
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
     {
+    	
+    	Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+    	config.load();
+    	
+    	tutgreeting = config.getString("greeting", "String", "Hi!!!!!!!", "Setup a Greetingmessage!");
+    	
+    	config.save();
     	
     	tuttab = new CreativeTabs("tuttab") {
 			@Override
@@ -220,6 +232,8 @@ public class TUTMain
     private void registerHandlers() {
     	
     	GameRegistry.registerFuelHandler(new TUTFuelHandler());
+    	
+    	FMLCommonHandler.instance().bus().register(new TUTEventHandler());
     	
     }
 }
