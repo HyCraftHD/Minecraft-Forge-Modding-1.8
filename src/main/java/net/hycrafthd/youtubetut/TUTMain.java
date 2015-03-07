@@ -17,6 +17,7 @@ import net.hycrafthd.youtubetut.item.TUTItem;
 import net.hycrafthd.youtubetut.item.TUTPickaxe;
 import net.hycrafthd.youtubetut.item.TUTSpade;
 import net.hycrafthd.youtubetut.item.TUTSword;
+import net.hycrafthd.youtubetut.world.TUTWorldgenerator;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -31,6 +32,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.stats.Achievement;
+import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -71,6 +74,9 @@ public class TUTMain
     public static Item tutboots;
     
     public static String tutgreeting;
+    
+    public static Achievement tutjoin;
+    public static Achievement tutonitemtutuse;
     
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
@@ -123,6 +129,8 @@ public class TUTMain
     	crafting();
     	furnancerecipes();
     	registerHandlers();
+    	registerAchievements();
+    	registerWorldgenerator();
     	
     }
     
@@ -236,4 +244,21 @@ public class TUTMain
     	FMLCommonHandler.instance().bus().register(new TUTEventHandler());
     	
     }
+    
+    //RegisterAchievements
+    private void registerAchievements() {
+    	
+    	tutjoin = (new Achievement("achievement.tutjoin", "tutjoin", 0, 0, new ItemStack(tutblock), (Achievement)null)).setIndependent().setSpecial().func_180788_c();
+    	tutonitemtutuse = (new Achievement("achievement.tutonitemtutuse", "tutonitemtutuse", 1, 3, new ItemStack(tutitem), tutjoin)).func_180788_c();
+    	AchievementPage.registerAchievementPage(new AchievementPage("Tutorial Achievements", new Achievement[]{tutjoin, tutonitemtutuse}));
+    
+    }
+    
+    //RegisterWorldgenerator
+    private void registerWorldgenerator() {
+    	
+    	GameRegistry.registerWorldGenerator(new TUTWorldgenerator(), 0);
+    	
+    }
+    
 }

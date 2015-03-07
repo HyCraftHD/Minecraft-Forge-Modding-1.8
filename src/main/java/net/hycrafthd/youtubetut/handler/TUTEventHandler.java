@@ -10,6 +10,7 @@ public class TUTEventHandler {
 	@SubscribeEvent
 	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent e) {
 		e.player.addChatMessage(new ChatComponentText(TUTMain.tutgreeting));
+		e.player.addStat(TUTMain.tutjoin, 1);
 	}
 	
 }

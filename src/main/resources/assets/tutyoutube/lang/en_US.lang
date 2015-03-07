@@ -15,4 +15,10 @@ item.tutboots.name=§3Tutorial Boots§r
 tile.tutblock2.name=§3Tutorial Block 2§r
 tile.tutblock.name=§3Tutorial Block§r
 
+achievement.tutjoin=§3Weltjoin§r
+achievement.tutjoin.desc=§3Join a new minecraftworld§r
+
+achievement.tutonitemtutuse=§3Fly§r
+achievement.tutonitemtutuse.desc=§3Use the fly item§r
+
 itemGroup.tuttab=§d§lTutorial Tab§r
