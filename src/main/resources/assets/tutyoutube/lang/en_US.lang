@@ -12,6 +12,9 @@ item.tutchestplate.name=§3Tutorial Chestplate§r
 item.tutleggings.name=§3Tutorial Leggings§r
 item.tutboots.name=§3Tutorial Boots§r
 
+item.tuthammer.name=§3Tutorial Hammer§r
+item.tutexcavator.name=§3Tutorial Excavator§r
+
 tile.tutblock2.name=§3Tutorial Block 2§r
 tile.tutblock.name=§3Tutorial Block§r
 

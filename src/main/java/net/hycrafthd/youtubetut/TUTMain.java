@@ -5,27 +5,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.hycrafthd.youtubetut.block.TUTBlock;
-import net.hycrafthd.youtubetut.block.TUTBlock2;
-import net.hycrafthd.youtubetut.handler.TUTEventHandler;
-import net.hycrafthd.youtubetut.handler.TUTFuelHandler;
-import net.hycrafthd.youtubetut.item.TUTArmor;
-import net.hycrafthd.youtubetut.item.TUTAxe;
-import net.hycrafthd.youtubetut.item.TUTFood;
-import net.hycrafthd.youtubetut.item.TUTHoe;
-import net.hycrafthd.youtubetut.item.TUTItem;
-import net.hycrafthd.youtubetut.item.TUTPickaxe;
-import net.hycrafthd.youtubetut.item.TUTSpade;
-import net.hycrafthd.youtubetut.item.TUTSword;
-import net.hycrafthd.youtubetut.world.TUTWorldgenerator;
+import net.hycrafthd.youtubetut.block.*;
+import net.hycrafthd.youtubetut.handler.*;
+import net.hycrafthd.youtubetut.item.*;
+import net.hycrafthd.youtubetut.world.*;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -33,15 +24,19 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.stats.Achievement;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.Height;
+import net.minecraft.world.biome.BiomeGenForest;
 import net.minecraftforge.common.AchievementPage;
+import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.BiomeManager.BiomeEntry;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = TUTMain.MODID, version = TUTMain.VERSION)
@@ -78,6 +73,12 @@ public class TUTMain
     public static Achievement tutjoin;
     public static Achievement tutonitemtutuse;
     
+    public static BiomeGenBase tutbiome;
+    public static int tutbiomeid;
+    
+    public static Item tuthammer;
+    public static Item tutexcavator;
+    
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
     {
@@ -86,6 +87,7 @@ public class TUTMain
     	config.load();
     	
     	tutgreeting = config.getString("greeting", "String", "Hi!!!!!!!", "Setup a Greetingmessage!");
+    	tutbiomeid = config.getInt("biomeid", "Biomes", 80, 60, 110, "Biome ID");
     	
     	config.save();
     	
@@ -117,6 +119,10 @@ public class TUTMain
     	tutleggings = new TUTArmor(tutarmormaterial, 2).setUnlocalizedName("tutleggings").setCreativeTab(tuttab);
     	tutboots = new TUTArmor(tutarmormaterial, 3).setUnlocalizedName("tutboots").setCreativeTab(tuttab);
     	
+    	tutbiome = new TUTBiome(tutbiomeid);
+    	tuthammer = new TUTHammer(tuttoolmaterial).setUnlocalizedName("tuthammer").setCreativeTab(tuttab);
+    	tutexcavator = new TUTExcavator(tuttoolmaterial).setUnlocalizedName("tutexcavator").setCreativeTab(tuttab);
+    	
     }
     
     @EventHandler
@@ -131,6 +137,7 @@ public class TUTMain
     	registerHandlers();
     	registerAchievements();
     	registerWorldgenerator();
+    	registerBiome();
     	
     }
     
@@ -196,7 +203,10 @@ public class TUTMain
     	GameRegistry.registerItem(tutboots, "tutboots");
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutboots, 0, new ModelResourceLocation(MODID + ":tutboots", "inventory"));
     	
-    	
+    	GameRegistry.registerItem(tuthammer, "tuthammer");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuthammer, 0, new ModelResourceLocation(MODID + ":tuthammer", "inventory"));
+    	GameRegistry.registerItem(tutexcavator, "tutexcavator");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutexcavator, 0, new ModelResourceLocation(MODID + ":tutexcavator", "inventory"));
     }
     
     //RegisterBlock
@@ -258,6 +268,13 @@ public class TUTMain
     private void registerWorldgenerator() {
     	
     	GameRegistry.registerWorldGenerator(new TUTWorldgenerator(), 0);
+    	
+    }
+    
+    //RegisterBiome
+    private void registerBiome() {
+    	
+    	BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(tutbiome, 1));
     	
     }
     
