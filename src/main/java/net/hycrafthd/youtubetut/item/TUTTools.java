@@ -24,11 +24,17 @@ public class TUTTools extends ItemTool {
 	
 	public Set EFFECTIVE_ON;
 	
-	public TUTTools(int breakr, int breakd, float attackDamage, ToolMaterial material, Set effectiveBlocks) {
+	private String harvesttool;
+	private int harvestlevel;
+	
+	public TUTTools(int breakr, int breakd, float attackDamage, ToolMaterial material, Set effectiveBlocks, String hartool, int harlevel) {
 		super(attackDamage, material, effectiveBlocks);
+		this.setHarvestLevel(hartool, harlevel);
 		this.breakRadius = breakr;
 		this.breakDepth = breakd;
 		this.EFFECTIVE_ON = effectiveBlocks;
+		this.harvesttool = hartool;
+		this.harvestlevel = harlevel;
 	}
 	
 	@Override
@@ -80,7 +86,10 @@ public class TUTTools extends ItemTool {
 			return;
 		}
 		EntityPlayerMP playermp = (EntityPlayerMP) player;
-		if(world.isAirBlock(pos) || !EFFECTIVE_ON.contains(block)) {
+		if(world.isAirBlock(pos)) {
+			return;
+		}
+		if(!(block.getHarvestTool(blockstate) == harvesttool) || (block.getHarvestLevel(blockstate) > harvestlevel)) {
 			return;
 		}
 		if(!world.isRemote) {
