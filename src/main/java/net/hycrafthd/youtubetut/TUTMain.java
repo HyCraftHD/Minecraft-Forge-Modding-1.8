@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import net.hycrafthd.youtubetut.block.*;
 import net.hycrafthd.youtubetut.handler.*;
 import net.hycrafthd.youtubetut.item.*;
+import net.hycrafthd.youtubetut.proxy.TUTServerProxy;
 import net.hycrafthd.youtubetut.world.*;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -35,7 +36,9 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -44,6 +47,12 @@ public class TUTMain
 {
     public static final String MODID = "tutyoutube";
     public static final String VERSION = "1.0";
+    
+    @Instance(MODID)
+    public static TUTMain INSTANCE;
+    
+    @SidedProxy(clientSide="net.hycrafthd.youtubetut.proxy.TUTClientProxy", serverSide="net.hycrafthd.youtubetut.proxy.TUTServerProxy")
+    public static TUTServerProxy PROXY;
     
     public static CreativeTabs tuttab;
     
