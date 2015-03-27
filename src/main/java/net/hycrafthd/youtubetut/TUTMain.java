@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.hycrafthd.youtubetut.block.*;
+import net.hycrafthd.youtubetut.entity.TUTGrenadeEntity;
 import net.hycrafthd.youtubetut.handler.*;
 import net.hycrafthd.youtubetut.item.*;
 import net.hycrafthd.youtubetut.proxy.TUTServerProxy;
@@ -18,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -40,6 +42,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = TUTMain.MODID, version = TUTMain.VERSION)
@@ -88,6 +91,8 @@ public class TUTMain
     public static Item tuthammer;
     public static Item tutexcavator;
     
+    public static Item tutgrenade;
+    
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
     {
@@ -132,6 +137,8 @@ public class TUTMain
     	tuthammer = new TUTHammer(tuttoolmaterial).setUnlocalizedName("tuthammer").setCreativeTab(tuttab);
     	tutexcavator = new TUTExcavator(tuttoolmaterial).setUnlocalizedName("tutexcavator").setCreativeTab(tuttab);
     	
+    	tutgrenade = new TUTGrenade().setUnlocalizedName("tutgrenade").setCreativeTab(tuttab);
+    	
     }
     
     @EventHandler
@@ -140,6 +147,7 @@ public class TUTMain
     	
     	registerItems();
     	registerBlocks();
+    	registerEntitys();
     	removerecipes();
     	crafting();
     	furnancerecipes();
@@ -153,7 +161,7 @@ public class TUTMain
     @EventHandler
     public void postinit(FMLPostInitializationEvent event)
     {
-    	
+    	PROXY.registerRenderThings();
     }
     
     //Craftingrezepte
@@ -216,6 +224,10 @@ public class TUTMain
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuthammer, 0, new ModelResourceLocation(MODID + ":tuthammer", "inventory"));
     	GameRegistry.registerItem(tutexcavator, "tutexcavator");
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutexcavator, 0, new ModelResourceLocation(MODID + ":tutexcavator", "inventory"));
+    	
+    	GameRegistry.registerItem(tutgrenade, "tutgrenade");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutgrenade, 0, new ModelResourceLocation(MODID + ":tutgrenade", "inventory"));
+    	
     }
     
     //RegisterBlock
@@ -285,6 +297,19 @@ public class TUTMain
     	
     	BiomeManager.addBiome(BiomeType.COOL, new BiomeEntry(tutbiome, 1));
     	
+    }
+    
+    //RegisterEntities
+    private void registerEntitys() {
+    	registerEntity(TUTGrenadeEntity.class, "tutgrenade", 128, 10, true);
+	}
+    
+    //RegisterEntityes...
+    private void registerEntity(Class <? extends Entity > entityClass, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
+    	int id = EntityRegistry.findGlobalUniqueEntityId();
+    	
+    	EntityRegistry.registerGlobalEntityID(entityClass, name, id);
+    	EntityRegistry.registerModEntity(entityClass, name, id, INSTANCE, trackingRange, updateFrequency, sendsVelocityUpdates);
     }
     
 }
