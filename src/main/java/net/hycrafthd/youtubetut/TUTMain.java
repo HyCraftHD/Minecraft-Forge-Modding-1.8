@@ -16,6 +16,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -93,6 +94,8 @@ public class TUTMain
     
     public static Item tutgrenade;
     
+    public static Item tutbow;
+    
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
     {
@@ -138,6 +141,8 @@ public class TUTMain
     	tutexcavator = new TUTExcavator(tuttoolmaterial).setUnlocalizedName("tutexcavator").setCreativeTab(tuttab);
     	
     	tutgrenade = new TUTGrenade().setUnlocalizedName("tutgrenade").setCreativeTab(tuttab);
+    	
+    	tutbow = new TUTBow().setUnlocalizedName("tutbow").setCreativeTab(tuttab);
     	
     }
     
@@ -228,6 +233,10 @@ public class TUTMain
     	GameRegistry.registerItem(tutgrenade, "tutgrenade");
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutgrenade, 0, new ModelResourceLocation(MODID + ":tutgrenade", "inventory"));
     	
+    	GameRegistry.registerItem(tutbow, "tutbow");
+    	ModelBakery.addVariantName(tutbow, MODID + ":tutbow", MODID + ":tutbow_0", MODID + ":tutbow_1", MODID + ":tutbow_2");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutbow, 0, new ModelResourceLocation(MODID + ":tutbow", "inventory"));
+    
     }
     
     //RegisterBlock

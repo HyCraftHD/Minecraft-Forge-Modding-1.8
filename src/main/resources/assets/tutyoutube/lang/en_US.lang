@@ -18,6 +18,9 @@ item.tutexcavator.name=§3Tutorial Excavator§r
 item.tutgrenade.name=§3Tutorial Grenade§r
 entity.tutgrenade.name=§3Tutorial Grenade§r
 
+item.tutbow.name=§3Tutorial Bow§r
+
+
 tile.tutblock2.name=§3Tutorial Block 2§r
 tile.tutblock.name=§3Tutorial Block§r
 
