@@ -1,4 +1,4 @@
-package net.hycrafthd.youtubetut;
+package net.hycrafthd.youtubetut.item;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
