@@ -96,6 +96,8 @@ public class TUTMain
     
     public static Item tutbow;
     
+    public static Item tuteffectfood;
+    
     @EventHandler
     public void preinit(FMLPreInitializationEvent event)
     {
@@ -143,6 +145,8 @@ public class TUTMain
     	tutgrenade = new TUTGrenade().setUnlocalizedName("tutgrenade").setCreativeTab(tuttab);
     	
     	tutbow = new TUTBow().setUnlocalizedName("tutbow").setCreativeTab(tuttab);
+    	
+    	tuteffectfood = new TUTEffectFood().setUnlocalizedName("tuteffectfood").setCreativeTab(tuttab);
     	
     }
     
@@ -236,6 +240,9 @@ public class TUTMain
     	GameRegistry.registerItem(tutbow, "tutbow");
     	ModelBakery.addVariantName(tutbow, MODID + ":tutbow", MODID + ":tutbow_0", MODID + ":tutbow_1", MODID + ":tutbow_2");
     	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutbow, 0, new ModelResourceLocation(MODID + ":tutbow", "inventory"));
+    	
+    	GameRegistry.registerItem(tuteffectfood, "tuteffectfood");
+    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuteffectfood, 0, new ModelResourceLocation(MODID + ":tuteffectfood", "inventory"));
     
     }
     

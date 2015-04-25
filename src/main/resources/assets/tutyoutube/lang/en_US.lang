@@ -20,6 +20,8 @@ entity.tutgrenade.name=§3Tutorial Grenade§r
 
 item.tutbow.name=§3Tutorial Bow§r
 
+item.tuteffectfood.name=§3Tutorial Effect Food§r
+
 
 tile.tutblock2.name=§3Tutorial Block 2§r
 tile.tutblock.name=§3Tutorial Block§r
