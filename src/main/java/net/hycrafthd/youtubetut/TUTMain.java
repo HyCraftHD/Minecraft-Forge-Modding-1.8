@@ -5,22 +5,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.hycrafthd.youtubetut.block.*;
+import net.hycrafthd.youtubetut.block.TUTBlock;
+import net.hycrafthd.youtubetut.block.TUTBlock2;
 import net.hycrafthd.youtubetut.entity.TUTGrenadeEntity;
-import net.hycrafthd.youtubetut.handler.*;
+import net.hycrafthd.youtubetut.handler.TUTEventHandler;
+import net.hycrafthd.youtubetut.handler.TUTFuelHandler;
 import net.hycrafthd.youtubetut.item.*;
 import net.hycrafthd.youtubetut.proxy.TUTServerProxy;
-import net.hycrafthd.youtubetut.world.*;
+import net.hycrafthd.youtubetut.world.TUTBiome;
+import net.hycrafthd.youtubetut.world.TUTWorldgenerator;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -29,8 +29,6 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.stats.Achievement;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenBase.Height;
-import net.minecraft.world.biome.BiomeGenForest;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
@@ -39,10 +37,12 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -170,6 +170,7 @@ public class TUTMain
     @EventHandler
     public void postinit(FMLPostInitializationEvent event)
     {
+    	PROXY.registerModels();
     	PROXY.registerRenderThings();
     }
     
@@ -204,45 +205,42 @@ public class TUTMain
     private void registerItems() {
     	
     	GameRegistry.registerItem(tutitem, "tutitem");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutitem, 0, new ModelResourceLocation(MODID + ":tutitem", "inventory"));
+    	
     	
     	GameRegistry.registerItem(tutfood, "tutfood");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutfood, 0, new ModelResourceLocation(MODID + ":tutfood", "inventory"));
+    	
     	
     	GameRegistry.registerItem(tutaxe, "tutaxe");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutaxe, 0, new ModelResourceLocation(MODID + ":tutaxe", "inventory"));
+    	
     	GameRegistry.registerItem(tutpickaxe, "tutpickaxe");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutpickaxe, 0, new ModelResourceLocation(MODID + ":tutpickaxe", "inventory"));
     	GameRegistry.registerItem(tutsword, "tutsword");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutsword, 0, new ModelResourceLocation(MODID + ":tutsword", "inventory"));
+    	
     	GameRegistry.registerItem(tutspade, "tutspade");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutspade, 0, new ModelResourceLocation(MODID + ":tutspade", "inventory"));
+    	
     	GameRegistry.registerItem(tuthoe, "tuthoe");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuthoe, 0, new ModelResourceLocation(MODID + ":tuthoe", "inventory"));
+
     	
     	GameRegistry.registerItem(tuthelmet, "tuthelmet");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuthelmet, 0, new ModelResourceLocation(MODID + ":tuthelmet", "inventory"));
+    	
     	GameRegistry.registerItem(tutchestplate, "tutchestplate");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutchestplate, 0, new ModelResourceLocation(MODID + ":tutchestplate", "inventory"));
+
     	GameRegistry.registerItem(tutleggings, "tutleggings");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutleggings, 0, new ModelResourceLocation(MODID + ":tutleggings", "inventory"));
+    
     	GameRegistry.registerItem(tutboots, "tutboots");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutboots, 0, new ModelResourceLocation(MODID + ":tutboots", "inventory"));
+
     	
     	GameRegistry.registerItem(tuthammer, "tuthammer");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuthammer, 0, new ModelResourceLocation(MODID + ":tuthammer", "inventory"));
+    	
     	GameRegistry.registerItem(tutexcavator, "tutexcavator");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutexcavator, 0, new ModelResourceLocation(MODID + ":tutexcavator", "inventory"));
     	
     	GameRegistry.registerItem(tutgrenade, "tutgrenade");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutgrenade, 0, new ModelResourceLocation(MODID + ":tutgrenade", "inventory"));
+    	
     	
     	GameRegistry.registerItem(tutbow, "tutbow");
-    	ModelBakery.addVariantName(tutbow, MODID + ":tutbow", MODID + ":tutbow_0", MODID + ":tutbow_1", MODID + ":tutbow_2");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tutbow, 0, new ModelResourceLocation(MODID + ":tutbow", "inventory"));
+    
     	
     	GameRegistry.registerItem(tuteffectfood, "tuteffectfood");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(tuteffectfood, 0, new ModelResourceLocation(MODID + ":tuteffectfood", "inventory"));
+
     
     }
     
@@ -250,10 +248,10 @@ public class TUTMain
     private void registerBlocks() {
     	
     	GameRegistry.registerBlock(tutblock, "tutblock");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(tutblock), 0, new ModelResourceLocation(MODID + ":tutblock", "inventory"));
+    	
     	
     	GameRegistry.registerBlock(tutblock2, "tutblock2");
-    	Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(tutblock2), 0, new ModelResourceLocation(MODID + ":tutblock2", "inventory"));
+    	
     	
     }
     

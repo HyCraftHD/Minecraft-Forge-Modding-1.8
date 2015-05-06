@@ -5,5 +5,9 @@ public class TUTServerProxy {
 	public void registerRenderThings() {
 		
 	}
+	
+	public void registerModels() {
+		//Clientstuff
+	}
 
 }
