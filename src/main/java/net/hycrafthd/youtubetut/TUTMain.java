@@ -1,5 +1,6 @@
 package net.hycrafthd.youtubetut;
 
+import java.net.NetworkInterface;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import net.hycrafthd.youtubetut.block.TUTBlock2;
 import net.hycrafthd.youtubetut.entity.TUTGrenadeEntity;
 import net.hycrafthd.youtubetut.handler.TUTEventHandler;
 import net.hycrafthd.youtubetut.handler.TUTFuelHandler;
+import net.hycrafthd.youtubetut.handler.TUTGuiHandler;
 import net.hycrafthd.youtubetut.item.*;
 import net.hycrafthd.youtubetut.proxy.TUTServerProxy;
 import net.hycrafthd.youtubetut.world.TUTBiome;
@@ -27,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.stats.Achievement;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.AchievementPage;
@@ -43,6 +46,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -287,6 +291,8 @@ public class TUTMain
     	GameRegistry.registerFuelHandler(new TUTFuelHandler());
     	
     	FMLCommonHandler.instance().bus().register(new TUTEventHandler());
+    	
+    	NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new TUTGuiHandler());
     	
     }
     
