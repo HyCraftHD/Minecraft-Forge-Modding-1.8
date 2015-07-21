@@ -1,6 +1,5 @@
 package net.hycrafthd.youtubetut;
 
-import java.net.NetworkInterface;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,19 @@ import net.hycrafthd.youtubetut.entity.TUTGrenadeEntity;
 import net.hycrafthd.youtubetut.handler.TUTEventHandler;
 import net.hycrafthd.youtubetut.handler.TUTFuelHandler;
 import net.hycrafthd.youtubetut.handler.TUTGuiHandler;
-import net.hycrafthd.youtubetut.item.*;
+import net.hycrafthd.youtubetut.item.TUTArmor;
+import net.hycrafthd.youtubetut.item.TUTAxe;
+import net.hycrafthd.youtubetut.item.TUTBow;
+import net.hycrafthd.youtubetut.item.TUTEffectFood;
+import net.hycrafthd.youtubetut.item.TUTExcavator;
+import net.hycrafthd.youtubetut.item.TUTFood;
+import net.hycrafthd.youtubetut.item.TUTGrenade;
+import net.hycrafthd.youtubetut.item.TUTHammer;
+import net.hycrafthd.youtubetut.item.TUTHoe;
+import net.hycrafthd.youtubetut.item.TUTItem;
+import net.hycrafthd.youtubetut.item.TUTPickaxe;
+import net.hycrafthd.youtubetut.item.TUTSpade;
+import net.hycrafthd.youtubetut.item.TUTSword;
 import net.hycrafthd.youtubetut.proxy.TUTServerProxy;
 import net.hycrafthd.youtubetut.world.TUTBiome;
 import net.hycrafthd.youtubetut.world.TUTWorldgenerator;
@@ -29,7 +40,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.stats.Achievement;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.AchievementPage;
@@ -100,8 +110,9 @@ public class TUTMain {
 	public static Item tutbow;
 
 	public static Item tuteffectfood;
-	
+
 	public static int tutguiid;
+	public static int tutguidefaultcraftingtable;
 
 	@EventHandler
 	public void preinit(FMLPreInitializationEvent event) {
@@ -151,8 +162,9 @@ public class TUTMain {
 		tutbow = new TUTBow().setUnlocalizedName("tutbow").setCreativeTab(tuttab);
 
 		tuteffectfood = new TUTEffectFood().setUnlocalizedName("tuteffectfood").setCreativeTab(tuttab);
-		
+
 		tutguiid = 1;
+		tutguidefaultcraftingtable = 2;
 
 	}
 
@@ -209,7 +221,7 @@ public class TUTMain {
 		GameRegistry.registerItem(tutaxe, "tutaxe");
 
 		GameRegistry.registerItem(tutpickaxe, "tutpickaxe");
-		
+
 		GameRegistry.registerItem(tutsword, "tutsword");
 
 		GameRegistry.registerItem(tutspade, "tutspade");
