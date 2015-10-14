@@ -28,6 +28,7 @@ import net.hycrafthd.youtubetut.proxy.TUTServerProxy;
 import net.hycrafthd.youtubetut.world.TUTBiome;
 import net.hycrafthd.youtubetut.world.TUTWorldgenerator;
 import net.minecraft.block.Block;
+import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
