@@ -2,6 +2,8 @@ package net.hycrafthd.youtubetutdimension.block;
 
 import java.util.Random;
 
+import net.hycrafthd.youtubetutdimension.DimMain;
+import net.hycrafthd.youtubetutdimension.world.DimTeleporter;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
@@ -10,6 +12,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMonsterPlacer;
@@ -24,13 +27,31 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDimPortal extends BlockBreakable {
-	
+
 	public static final PropertyEnum AXIS = PropertyEnum.create("axis", EnumFacing.Axis.class, new EnumFacing.Axis[] { EnumFacing.Axis.X, EnumFacing.Axis.Z });
 
 	public BlockDimPortal() {
 		super(Material.portal, false);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(AXIS, EnumFacing.Axis.X));
 		this.setTickRandomly(true);
+	}
+
+	/**
+	 * Called When an Entity Collided with the Block
+	 */
+	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && entityIn instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) entityIn;
+			if (player.timeUntilPortal > 0) {
+				player.timeUntilPortal = 10;
+			} else if (player.dimension == 0) {
+				player.timeUntilPortal = 10;
+				player.mcServer.getConfigurationManager().transferPlayerToDimension(player, DimMain.dimensionId, new DimTeleporter(player.mcServer.worldServerForDimension(DimMain.dimensionId)));
+			} else if (player.dimension == DimMain.dimensionId) {
+				player.timeUntilPortal = 10;
+				player.mcServer.getConfigurationManager().transferPlayerToDimension(player, 0, new DimTeleporter(player.mcServer.worldServerForDimension(0)));
+			}
+		}
 	}
 
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
@@ -160,15 +181,6 @@ public class BlockDimPortal extends BlockBreakable {
 	}
 
 	/**
-	 * Called When an Entity Collided with the Block
-	 */
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null) {
-			entityIn.setInPortal();
-		}
-	}
-
-	/**
 	 * Convert the given metadata into a BlockState for this Block
 	 */
 	public IBlockState getStateFromMeta(int meta) {
@@ -273,13 +285,13 @@ public class BlockDimPortal extends BlockBreakable {
 			for (i = 0; i < 22; ++i) {
 				BlockPos blockpos1 = p_180120_1_.offset(p_180120_2_, i);
 
-				if (!this.func_150857_a(this.world.getBlockState(blockpos1).getBlock()) || this.world.getBlockState(blockpos1.down()).getBlock() != Blocks.obsidian) {
+				if (!this.func_150857_a(this.world.getBlockState(blockpos1).getBlock()) || this.world.getBlockState(blockpos1.down()).getBlock() != DimMain.stone) {
 					break;
 				}
 			}
 
 			Block block = this.world.getBlockState(p_180120_1_.offset(p_180120_2_, i)).getBlock();
-			return block == Blocks.obsidian ? i : 0;
+			return block == DimMain.stone ? i : 0;
 		}
 
 		protected int func_150858_a() {
@@ -295,20 +307,20 @@ public class BlockDimPortal extends BlockBreakable {
 						break label56;
 					}
 
-					if (block == Blocks.portal) {
+					if (block == DimMain.portal) {
 						++this.field_150864_e;
 					}
 
 					if (i == 0) {
 						block = this.world.getBlockState(blockpos.offset(this.field_150863_d)).getBlock();
 
-						if (block != Blocks.obsidian) {
+						if (block != DimMain.stone) {
 							break label56;
 						}
 					} else if (i == this.field_150868_h - 1) {
 						block = this.world.getBlockState(blockpos.offset(this.field_150866_c)).getBlock();
 
-						if (block != Blocks.obsidian) {
+						if (block != DimMain.stone) {
 							break label56;
 						}
 					}
@@ -316,7 +328,7 @@ public class BlockDimPortal extends BlockBreakable {
 			}
 
 			for (i = 0; i < this.field_150868_h; ++i) {
-				if (this.world.getBlockState(this.field_150861_f.offset(this.field_150866_c, i).up(this.field_150862_g)).getBlock() != Blocks.obsidian) {
+				if (this.world.getBlockState(this.field_150861_f.offset(this.field_150866_c, i).up(this.field_150862_g)).getBlock() != DimMain.stone) {
 					this.field_150862_g = 0;
 					break;
 				}
@@ -333,7 +345,7 @@ public class BlockDimPortal extends BlockBreakable {
 		}
 
 		protected boolean func_150857_a(Block p_150857_1_) {
-			return p_150857_1_.getMaterial() == Material.air || p_150857_1_ == Blocks.fire || p_150857_1_ == Blocks.portal;
+			return p_150857_1_.getMaterial() == Material.air || p_150857_1_ == DimMain.creator || p_150857_1_ == DimMain.portal;
 		}
 
 		public boolean func_150860_b() {
@@ -345,7 +357,7 @@ public class BlockDimPortal extends BlockBreakable {
 				BlockPos blockpos = this.field_150861_f.offset(this.field_150866_c, i);
 
 				for (int j = 0; j < this.field_150862_g; ++j) {
-					this.world.setBlockState(blockpos.up(j), Blocks.portal.getDefaultState().withProperty(BlockDimPortal.AXIS, this.axis), 2);
+					this.world.setBlockState(blockpos.up(j), DimMain.portal.getDefaultState().withProperty(BlockDimPortal.AXIS, this.axis), 2);
 				}
 			}
 		}

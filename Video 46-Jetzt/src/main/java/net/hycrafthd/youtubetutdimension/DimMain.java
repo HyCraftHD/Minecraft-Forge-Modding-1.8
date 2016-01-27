@@ -1,10 +1,16 @@
 package net.hycrafthd.youtubetutdimension;
 
+import net.hycrafthd.youtubetutdimension.block.BlockDimCreator;
 import net.hycrafthd.youtubetutdimension.block.BlockDimPortal;
+import net.hycrafthd.youtubetutdimension.block.BlockDimStone;
+import net.hycrafthd.youtubetutdimension.world.DimWorldProvider;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -16,11 +22,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = DimMain.MODID, version = DimMain.VERSION)
 public class DimMain {
-	
+
 	public static final String MODID = "tutyoutubedim";
 	public static final String VERSION = "1.0";
-	
+
 	public static Block creator, portal, stone;
+
+	public static int dimensionId;
+	public static int biomeId;
+	public static BiomeGenBase biome;
 
 	@Instance(MODID)
 	public static DimMain INSTANCE;
@@ -39,7 +49,11 @@ public class DimMain {
 				return Item.getItemFromBlock(Blocks.anvil);
 			}
 		};
-		
+
+		dimensionId = DimensionManager.getNextFreeDimId();
+		biomeId = 60;
+		// biome = new BiomeGen
+
 		portal = new BlockDimPortal().setUnlocalizedName("dimportal").setCreativeTab(tab);
 		stone = new BlockDimStone().setUnlocalizedName("dimstone").setCreativeTab(tab);
 		creator = new BlockDimCreator().setUnlocalizedName("dimcreator").setCreativeTab(tab);
@@ -51,6 +65,9 @@ public class DimMain {
 		GameRegistry.registerBlock(portal, "dimportal");
 		GameRegistry.registerBlock(stone, "dimstone");
 		GameRegistry.registerBlock(creator, "dimcreator");
+
+		DimensionManager.registerProviderType(dimensionId, DimWorldProvider.class, true);
+		DimensionManager.registerDimension(dimensionId, dimensionId);
 	}
 
 	@EventHandler
