@@ -3,6 +3,7 @@ package net.hycrafthd.youtubetutdimension;
 import net.hycrafthd.youtubetutdimension.block.BlockDimCreator;
 import net.hycrafthd.youtubetutdimension.block.BlockDimPortal;
 import net.hycrafthd.youtubetutdimension.block.BlockDimStone;
+import net.hycrafthd.youtubetutdimension.world.BiomeDim;
 import net.hycrafthd.youtubetutdimension.world.DimWorldProvider;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -10,6 +11,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.BiomeManager.BiomeEntry;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -50,13 +53,13 @@ public class DimMain {
 			}
 		};
 
-		dimensionId = DimensionManager.getNextFreeDimId();
-		biomeId = 60;
-		// biome = new BiomeGen
-
 		portal = new BlockDimPortal().setUnlocalizedName("dimportal").setCreativeTab(tab);
 		stone = new BlockDimStone().setUnlocalizedName("dimstone").setCreativeTab(tab);
 		creator = new BlockDimCreator().setUnlocalizedName("dimcreator").setCreativeTab(tab);
+		
+		dimensionId = DimensionManager.getNextFreeDimId();
+		biomeId = 60;
+		biome = new BiomeDim(biomeId);
 
 	}
 
@@ -65,7 +68,7 @@ public class DimMain {
 		GameRegistry.registerBlock(portal, "dimportal");
 		GameRegistry.registerBlock(stone, "dimstone");
 		GameRegistry.registerBlock(creator, "dimcreator");
-
+		
 		DimensionManager.registerProviderType(dimensionId, DimWorldProvider.class, true);
 		DimensionManager.registerDimension(dimensionId, dimensionId);
 	}
