@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "axis=z": { "model": "tutyoutubedim:dimportal_ew" },
+        "axis=x": { "model": "tutyoutubedim:dimportal_ns" }
+    }
+}
